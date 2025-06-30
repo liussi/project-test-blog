@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home/Home.jsx";
+import Post from "./pages/Posts/Posts.jsx";
+import AddPost from "./pages/AddPost/AddPost.jsx";
+import NotFound from "./components/NotFound/NotFound.jsx"
+import { useState,useEffect } from "react";
+import GlobalStyles from './styles/GlobalStyles';
+
 
 function App() {
+  const [posts, setPosts] = useState(() => {
+    const savedPosts = localStorage.getItem("posts");
+    return savedPosts ? JSON.parse(savedPosts) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("posts", JSON.stringify(posts));
+  }, [posts]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+  <GlobalStyles />
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home posts={posts} />} />
+        <Route path="/post/:id" element={<Post posts={posts}/>} />
+        <Route path="/add-post" element={<AddPost posts={posts} setPosts={setPosts}/>} />
+        <Route path="*" element={<NotFound/>}/>
+      </Routes>
+    </Router>
+    </>
   );
 }
 
