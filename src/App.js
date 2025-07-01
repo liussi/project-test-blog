@@ -4,7 +4,6 @@ import Post from "./pages/Posts/Posts.jsx";
 import AddPost from "./pages/AddPost/AddPost.jsx";
 import NotFound from "./components/NotFound/NotFound.jsx"
 import { useState,useEffect } from "react";
-import GlobalStyles from './styles/GlobalStyles';
 
 
 function App() {
@@ -19,8 +18,7 @@ function App() {
 
   return (
     <>
-  <GlobalStyles />
-    <Router>
+    <Router >
       <Routes>
         <Route path="/" element={<Home posts={posts} />} />
         <Route path="/post/:id" element={<Post posts={posts}/>} />
